@@ -1,0 +1,14 @@
+## Standard
+node_modules/
+.idea/
+.gitignore
+
+## Project-specific
+/tools/
+/*.tgz
+
+## Yarn
+yarn-error.log
+
+## Prettier
+.prettierrc.json
