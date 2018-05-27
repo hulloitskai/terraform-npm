@@ -6,8 +6,10 @@
 ### Preamble
 I assembled [Terraform](https://terraform.io) into an NPM package in order for me to include it in other projects that depended on the executable. I wanted to be able to publish NPM modules with scripts like this:
 ```json
-"scripts": {
-  "plan": "terraform plan -out=my-tfplan"
+{
+  "scripts": {
+    "plan": "terraform plan -out=my-tfplan"
+  }
 }
 ```
 But without having to worry about asking users to download Terraform externally.
@@ -25,10 +27,12 @@ npm install hashicorp-terraform
 ### Usage
 This package cannot currently be used as a typical Node module, as it does not export any entry points; it only symlinks a binary. So, the recommended use case is to use it in your `package.json` scripts:
 ```json
-"scripts": {
-    "plan": "terraform plan -out=my-tfplan",
-    "apply": "terraform apply",
-    "execute": "terraform apply \"my-tfplan\"",
-    "destroy": "terraform destroy"
+{
+    "scripts": {
+        "plan": "terraform plan -out=my-tfplan",
+        "apply": "terraform apply",
+        "execute": "terraform apply \"my-tfplan\"",
+        "destroy": "terraform destroy"
+    }
 }
 ```
