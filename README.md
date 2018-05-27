@@ -1,7 +1,7 @@
 # terraform-npm
 *An NPM executable package for HashiCorp's Terraform.*
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![terraform: v0.11.7](https://img.shields.io/badge/terraform-v0.11.7.0-6253f4.svg)](https://www.terraform.io) [![npm downloads](https://img.shields.io/npm/dw/hashicorp-terraform.svg?maxAge=3600)]()
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![terraform: v0.11.7](https://img.shields.io/badge/terraform-v0.11.7.0-6253f4.svg)](https://www.terraform.io) [![npm downloads](https://img.shields.io/npm/dw/hashicorp-terraform.svg?maxAge=3600)](https://www.npmjs.com/package/hashicorp-terraform)
 
 ### Preamble
 I assembled [Terraform](https://terraform.io) into an NPM package in order for me to include it in other projects that depended on the executable. I wanted to be able to publish NPM modules with scripts like this:
@@ -13,6 +13,8 @@ I assembled [Terraform](https://terraform.io) into an NPM package in order for m
 }
 ```
 But without having to worry about asking users to download Terraform externally.
+
+---
 
 ### Installation
 To use `terraform` as an NPM package, include it in your `package.json` dependencies:

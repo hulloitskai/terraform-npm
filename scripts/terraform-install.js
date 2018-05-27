@@ -6,6 +6,8 @@ const unzip = require('unzip');
 // File constants
 const TOOLS_DIR = path.join('tools');
 const ZIP_DIR = path.join(TOOLS_DIR, 'terraform.zip');
+const EXEC_NAME = process.platform === 'win32' ? 'terraform.exe' : 'terraform';
+const EXEC_DIR = path.join(TOOLS_DIR, EXEC_NAME);
 
 // Terraform download source contants
 const TF_ROOT_URI = 'https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_';
@@ -140,17 +142,30 @@ function unzipTerraform() {
 
   zip.pipe(extractor);
   zip.on('close', function() {
-    console.log('Finished unzipping, now removing original zip...');
+    console.log('Finished unzipping.');
+    setExecPermissions();
     unlinkZip();
+  });
+}
+
+function setExecPermissions() {
+  console.log('Setting executable file permissions...');
+  fs.chmod(EXEC_DIR, 755, function(err) {
+    if (err) {
+      console.error(`Could not set executable file permissions: ${err}`);
+      process.exit(6);
+    }
+    console.log('Done setting file permissions.');
   });
 }
 
 // Remove the temporary file...
 function unlinkZip() {
+  console.log('Cleaning up temporary artifacts...');
   fs.unlink(ZIP_DIR, function(err) {
     if (err) {
       console.error(`An error occurred while deleting the Terraform zip: ${err}`);
-      process.exit(6);
+      process.exit(7);
     }
     console.log('Removed temporary downloaded artifacts. Installation completed! 🎉');
   });

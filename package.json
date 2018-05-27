@@ -1,6 +1,6 @@
 {
   "name": "hashicorp-terraform",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "An NPM executable package for HashiCorp's Terraform.",
   "homepage": "https://github.com/steven-xie/terraform-npm",
   "repository": "git@github.com:steven-xie/terraform-npm",
@@ -21,6 +21,7 @@
   ],
   "scripts": {
     "prettier": "prettier --write src/**/*.js scripts/**/*.js",
+    "prepub": "yarn prepublishOnly",
     "prepublishOnly": "yarn prettier && pkgfiles",
     "postinstall": "node scripts/terraform-install.js",
     "test": "./tests/runner.sh"
