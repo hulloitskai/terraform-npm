@@ -22,7 +22,8 @@
   "scripts": {
     "prettier": "prettier --write src/**/*.js scripts/**/*.js",
     "prepublishOnly": "yarn prettier && pkgfiles",
-    "postinstall": "node scripts/terraform-install.js"
+    "postinstall": "node scripts/terraform-install.js",
+    "test": "./tests/runner.sh"
   },
   "bin": {
     "terraform": "src/terraform-exec.js"

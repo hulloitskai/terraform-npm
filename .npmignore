@@ -6,6 +6,7 @@ node_modules/
 
 ## Project-specific
 /tools/
+/tests/
 /*.tgz
 
 ## Yarn

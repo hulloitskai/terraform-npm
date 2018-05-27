@@ -48,7 +48,7 @@ function mapArchToPostfix(platform, arch, isARMcompat = true) {
 }
 
 function mapPlatformToKey(platform, arch) {
-  function archMapper(isARMcompat = true) {
+  function archMapper(isARMcompat) {
     return mapArchToPostfix(platform, arch, isARMcompat);
   }
   switch (platform) {
