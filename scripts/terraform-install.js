@@ -48,8 +48,8 @@ function mapArchToPostfix(platform, arch, isARMcompat = true) {
 }
 
 function mapPlatformToKey(platform, arch) {
-  function archMapper(isARMcompat) {
-    mapArchToPostfix(platform, arch, isARMcompat);
+  function archMapper(isARMcompat = true) {
+    return mapArchToPostfix(platform, arch, isARMcompat);
   }
   switch (platform) {
     case 'linux':
@@ -79,7 +79,16 @@ function mapPlatformToKey(platform, arch) {
 }
 
 function mapPlatformToZip(platform, arch) {
-  return TF_ROOT_URI + TF_PLATFORM_ZIPS[mapPlatformToKey(platform, arch)];
+  const platformKey = mapPlatformToKey(platform, arch);
+  const platformString = TF_PLATFORM_ZIPS[platformKey];
+  if (platformString === undefined) {
+    console.error(
+      `Could not find a download path for the platform '${platform}', the ` +
+        `arch '${arch}', and the generated key '${platformKey}'.`
+    );
+    process.exit(2);
+  }
+  return TF_ROOT_URI + TF_PLATFORM_ZIPS[platformKey];
 }
 
 // Ensure desired download directory exists...
@@ -89,7 +98,7 @@ fs.access(TOOLS_DIR, fs.constants.F_OK, function(err) {
     fs.mkdir(TOOLS_DIR, function(err) {
       if (err) {
         console.error(`Could not create a 'tools/' directory: ${err}`);
-        process.exit(2);
+        process.exit(3);
       }
       downloadTerraformZip();
     });
@@ -114,7 +123,7 @@ function downloadTerraformZip() {
     })
     .on('error', function(e) {
       console.error(`Failed to download zipped Terraform executable: ${e}`);
-      process.exit(3);
+      process.exit(4);
     });
 }
 
@@ -122,7 +131,14 @@ function downloadTerraformZip() {
 function unzipTerraform() {
   console.log('Unzipping downloaded archive...');
   const zip = fs.createReadStream(ZIP_DIR);
-  zip.pipe(unzip.Extract({ path: TOOLS_DIR }));
+
+  const extractor = unzip.Extract({ path: TOOLS_DIR });
+  extractor.on('error', function(err) {
+    console.error(`Ran into an error while unzipping: ${err}`);
+    process.exit(5);
+  });
+
+  zip.pipe(extractor);
   zip.on('close', function() {
     console.log('Finished unzipping, now removing original zip...');
     unlinkZip();
@@ -134,7 +150,7 @@ function unlinkZip() {
   fs.unlink(ZIP_DIR, function(err) {
     if (err) {
       console.error(`An error occurred while deleting the Terraform zip: ${err}`);
-      process.exit(5);
+      process.exit(6);
     }
     console.log('Removed temporary downloaded artifacts. Installation completed! 🎉');
   });
