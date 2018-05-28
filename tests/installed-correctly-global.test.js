@@ -1,12 +1,12 @@
-const { execFile } = require('child_process');
+const { exec } = require('child_process');
 
 function showError(msg) {
-  console.error(`Test 'installed-correctly' failed: ${msg}`);
+  console.error(`Test 'global' failed: ${msg}`);
 }
 
-execFile('yarn', ['start', '-v'], function(err, stdout) {
-  if (err) {
-    showError(err);
+exec('terraform -v', function(err, stdout, stderr) {
+  if (err || stderr) {
+    showError(err || stderr);
     process.exit(1);
   }
   if (stdout.indexOf('Terraform v') === -1) {
