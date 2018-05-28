@@ -1,6 +1,6 @@
 {
   "name": "hashicorp-terraform",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "An NPM executable package for HashiCorp's Terraform.",
   "homepage": "https://github.com/steven-xie/terraform-npm",
   "repository": "git@github.com:steven-xie/terraform-npm",

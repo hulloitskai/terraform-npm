@@ -115,9 +115,9 @@ function downloadTerraformZip() {
   console.log(`Downloading zipped Terraform executable from ${downloadUri}...`);
   https
     .get(downloadUri, function(response) {
-      console.log('Download finished.');
       response.pipe(zip);
       zip.on('finish', function() {
+        console.log('Download finished.');
         zip.close(function() {
           unzipTerraform();
         });
@@ -143,30 +143,41 @@ function unzipTerraform() {
   zip.pipe(extractor);
   zip.on('close', function() {
     console.log('Finished unzipping.');
-    setExecPermissions();
-    unlinkZip();
+    cleanupAndPermissions();
+  });
+}
+
+function cleanupAndPermissions() {
+  Promise.all([setExecPermissions(), unlinkZip()]).then(function() {
+    console.log('\x1b[1;35m%s\x1b[0m', 'Installation completed! 🎉');
   });
 }
 
 function setExecPermissions() {
-  console.log('Setting executable file permissions...');
-  fs.chmod(EXEC_DIR, 755, function(err) {
-    if (err) {
-      console.error(`Could not set executable file permissions: ${err}`);
-      process.exit(6);
-    }
-    console.log('Done setting file permissions.');
+  return new Promise(function(resolve) {
+    console.log('Setting executable file permissions...');
+    fs.chmod(EXEC_DIR, 755, function(err) {
+      if (err) {
+        console.error(`Could not set executable file permissions: ${err}`);
+        process.exit(6);
+      }
+      console.log('Done setting file permissions.');
+      resolve();
+    });
   });
 }
 
 // Remove the temporary file...
 function unlinkZip() {
-  console.log('Cleaning up temporary artifacts...');
-  fs.unlink(ZIP_DIR, function(err) {
-    if (err) {
-      console.error(`An error occurred while deleting the Terraform zip: ${err}`);
-      process.exit(7);
-    }
-    console.log('Removed temporary downloaded artifacts. Installation completed! 🎉');
+  return new Promise(function(resolve) {
+    console.log('Cleaning up temporary artifacts...');
+    fs.unlink(ZIP_DIR, function(err) {
+      if (err) {
+        console.error(`An error occurred while deleting the Terraform zip: ${err}`);
+        process.exit(7);
+      }
+      console.log('Removed temporary artifacts.');
+      resolve();
+    });
   });
 }
