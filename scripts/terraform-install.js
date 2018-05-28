@@ -163,7 +163,11 @@ function unzipTerraform() {
 
 function cleanupAndPermissions() {
   Promise.all([setExecPermissions(), unlinkZip()]).then(function() {
-    console.log('\x1b[1;35m%s\x1b[0m', 'Installation completed! 🎉');
+    const msg =
+      process.platform === 'win32'
+        ? 'Installation completed!'
+        : 'Installation completed! 🎉';
+    console.log('\x1b[1;35m%s\x1b[0m', msg);
   });
 }
 
