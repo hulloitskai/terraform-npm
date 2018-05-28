@@ -20,14 +20,15 @@
     "executable"
   ],
   "scripts": {
-    "prettier": "prettier --write src/**/*.js scripts/**/*.js",
+    "prettier": "prettier --write src/**/*.js scripts/**/*.js tests/**/*.js",
     "prepub": "yarn prepublishOnly",
     "prepublishOnly": "yarn prettier && pkgfiles",
     "postinstall": "node scripts/terraform-install.js",
-    "test": "./tests/runner.sh"
+    "test": "./tests/runner.sh",
+    "test-global": "./tests/global-runner.sh"
   },
   "bin": {
-    "terraform": "src/terraform-exec.js"
+    "terraform": "./src/terraform-exec.js"
   },
   "dependencies": {
     "progress": "^2.0.0",

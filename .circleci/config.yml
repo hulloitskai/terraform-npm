@@ -1,26 +1,34 @@
+common: &common
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10.1.0
+
 version: 2
 jobs:
-  build_and_test:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:10.1.0
+  build-test:
+    <<: *common
     steps:
       - checkout
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - dependencies-{{ checksum "package.json" }}
-            # fallback
-            - dependencies-
+            - dependencies-   # fallback
       - run: yarn install
       - run: yarn test
       - save_cache:
+          key: dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-          key: dependencies-{{ checksum "package.json" }}
+  installation-test:
+    <<: *common
+    steps:
+      - checkout
+      - run: yarn global add "https://github.com/$CIRCLE_USERNAME/$CIRCLE_PROJECT_REPONAME"
+      - run: yarn test-global
 
 workflows:
   version: 2
-  build_and_test:
+  build+install:
     jobs:
-      - build_and_test
+      - build-test
+      - installation-test

@@ -12,7 +12,7 @@ execFile(path.join('..', 'tools', execName), ['-v'], function(err, stdout, stder
     showError(err || stderr);
     process.exit(1);
   }
-  if (stdout.indexOf('Terraform') === -1) {
+  if (stdout.indexOf('Terraform v') === -1) {
     showError(
       `Expected version information from 'terraform -v', instead received: ${stdout}`
     );
