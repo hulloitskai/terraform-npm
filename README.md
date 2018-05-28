@@ -20,19 +20,19 @@ But without having to worry about asking users to download Terraform externally.
 To use *Terraform* as an NPM package, include it in your `package.json` dependencies:
 ```bash
 # If you're using Yarn (recommended):
-yarn add hashicorp-terraform
+yarn add terraform-npm
 
 # If you're using NPM:
-npm i hashicorp-terraform
+npm i terraform-npm
 ```
 
 Or, if you want a one-time installation that you can run arbitrarily, install it globally:
 ```bash
 # If you're using Yarn (recommended):
-yarn global add hashicorp-terraform
+yarn global add terraform-npm
 
 # If you're using NPM:
-npm i -g hashicorp-terraform
+npm i -g terraform-npm
 ```
 
 
