@@ -13,5 +13,6 @@ exec('terraform -v', function(err, stdout, stderr) {
     showError(
       `Expected version information from 'terraform -v', instead received: ${stdout}`
     );
+    process.exit(2);
   }
 });

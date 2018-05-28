@@ -1,6 +1,6 @@
 {
-  "name": "hashicorp-terraform",
-  "version": "0.1.11",
+  "name": "terraform-npm",
+  "version": "0.1.12",
   "description": "An NPM executable package for HashiCorp's Terraform.",
   "homepage": "https://www.npmjs.com/package/terraform-npm",
   "repository": "https://github.com/steven-xie/terraform-npm",
@@ -20,6 +20,7 @@
     "executable"
   ],
   "scripts": {
+    "start": "cd src && node terraform-wrapper.js",
     "prettier": "prettier --write src/**/*.js scripts/**/*.js tests/**/*.js",
     "prepub": "yarn prepublishOnly",
     "prepublishOnly": "yarn prettier && pkgfiles",
@@ -28,7 +29,7 @@
     "test-global": "./tests/global-runner.sh"
   },
   "bin": {
-    "terraform": "./src/terraform-exec.js"
+    "terraform": "./src/terraform-wrapper.js"
   },
   "dependencies": {
     "progress": "^2.0.0",

@@ -1,15 +1,12 @@
 const { execFile } = require('child_process');
-const path = require('path');
 
 function showError(msg) {
   console.error(`Test 'installed-correctly' failed: ${msg}`);
 }
 
-const execName = process.platform === 'win32' ? 'terraform.exe' : 'terraform';
-
-execFile(path.join('..', 'tools', execName), ['-v'], function(err, stdout, stderr) {
-  if (err || stderr) {
-    showError(err || stderr);
+execFile('yarn', ['start', '-v'], function(err, stdout) {
+  if (err) {
+    showError(err);
     process.exit(1);
   }
   if (stdout.indexOf('Terraform v') === -1) {
