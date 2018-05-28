@@ -118,7 +118,7 @@ function downloadTerraformZip() {
   https
     .get(url.parse(downloadUri), function(res) {
       const total = parseInt(res.headers['content-length'], 10);
-      const bar = new Progress('[:bar] :percent', { total, width: 40 });
+      const bar = new Progress('[:bar] :percent', { total });
       res
         .on('data', function(chunk) {
           zip.write(chunk);
@@ -170,7 +170,7 @@ function cleanupAndPermissions() {
 function setExecPermissions() {
   return new Promise(function(resolve) {
     console.log('Setting executable file permissions...');
-    fs.chmod(EXEC_DIR, 755, function(err) {
+    fs.chmod(EXEC_DIR, 0o755, function(err) {
       if (err) {
         console.error(`Could not set executable file permissions: ${err}`);
         process.exit(7);
