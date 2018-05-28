@@ -1,4 +1,5 @@
-const { execFile, path } = require('child_process');
+const { execFile } = require('child_process');
+const path = require('path');
 
 const execName = process.platform === 'win32' ? 'terraform.exe' : 'terraform';
 
