@@ -2,6 +2,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const unzip = require('unzip');
+const Progress = require('progress');
 
 // File constants
 const TOOLS_DIR = path.join('tools');
@@ -109,23 +110,36 @@ fs.access(TOOLS_DIR, fs.constants.F_OK, function(err) {
 
 // Download zipped executable...
 function downloadTerraformZip() {
+  const url = require('url');
   const zip = fs.createWriteStream(ZIP_DIR);
   const { platform, arch } = process;
   const downloadUri = mapPlatformToZip(platform, arch);
   console.log(`Downloading zipped Terraform executable from ${downloadUri}...`);
   https
-    .get(downloadUri, function(response) {
-      response.pipe(zip);
-      zip.on('finish', function() {
-        console.log('Download finished.');
-        zip.close(function() {
-          unzipTerraform();
+    .get(url.parse(downloadUri), function(res) {
+      const total = parseInt(res.headers['content-length'], 10);
+      const bar = new Progress('[:bar] :percent', { total, width: 40 });
+      res
+        .on('data', function(chunk) {
+          zip.write(chunk);
+          bar.tick(chunk.length);
+        })
+        .on('end', function() {
+          zip.end();
+          console.log('Download finished.');
+          zip.close(function() {
+            unzipTerraform();
+          });
+        })
+        .on('error', function(e) {
+          console.error(`Failed to download zipped Terraform executable: ${e}`);
+          process.exit(4);
         });
-      });
+      // response.pipe(zip);
     })
     .on('error', function(e) {
       console.error(`Failed to download zipped Terraform executable: ${e}`);
-      process.exit(4);
+      process.exit(5);
     });
 }
 
@@ -137,7 +151,7 @@ function unzipTerraform() {
   const extractor = unzip.Extract({ path: TOOLS_DIR });
   extractor.on('error', function(err) {
     console.error(`Ran into an error while unzipping: ${err}`);
-    process.exit(5);
+    process.exit(6);
   });
 
   zip.pipe(extractor);
@@ -159,7 +173,7 @@ function setExecPermissions() {
     fs.chmod(EXEC_DIR, 755, function(err) {
       if (err) {
         console.error(`Could not set executable file permissions: ${err}`);
-        process.exit(6);
+        process.exit(7);
       }
       console.log('Done setting file permissions.');
       resolve();
@@ -174,7 +188,7 @@ function unlinkZip() {
     fs.unlink(ZIP_DIR, function(err) {
       if (err) {
         console.error(`An error occurred while deleting the Terraform zip: ${err}`);
-        process.exit(7);
+        process.exit(8);
       }
       console.log('Removed temporary artifacts.');
       resolve();

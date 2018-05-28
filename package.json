@@ -1,6 +1,6 @@
 {
   "name": "hashicorp-terraform",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "An NPM executable package for HashiCorp's Terraform.",
   "homepage": "https://www.npmjs.com/package/terraform-npm",
   "repository": "https://github.com/steven-xie/terraform-npm",
@@ -30,6 +30,7 @@
     "terraform": "src/terraform-exec.js"
   },
   "dependencies": {
+    "progress": "^2.0.0",
     "unzip": "^0.1.11"
   },
   "devDependencies": {
