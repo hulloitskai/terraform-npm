@@ -14,3 +14,7 @@ yarn-error.log
 
 ## Prettier
 .prettierrc.json
+
+## Editors
+.vscode/
+.editorconfig

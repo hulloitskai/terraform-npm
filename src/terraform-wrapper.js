@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 const { resolve } = require('path');
 
 const command = process.platform === 'win32' ? 'terraform.exe' : './terraform';
-const terraform = spawn(command, process.argv.slice(1), {
+const terraform = spawn(command, process.argv.slice(2), {
 	cwd: resolve(__dirname, '..', 'tools')
 });
 
