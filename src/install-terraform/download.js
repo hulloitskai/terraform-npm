@@ -19,7 +19,7 @@ async function download(url, destDir) {
 	return new Promise(resolve => {
 		get(parseUrl(url), function(res) {
 			const totalChunks = parseInt(res.headers['content-length'], 10);
-			const prgbar = new Progress('[:bar] :percent', { total: totalChunks });
+			const prgbar = new Progress('[:bar] :percent ', { total: totalChunks });
 			res
 				.on('data', function(chunk) {
 					fstream.write(chunk);

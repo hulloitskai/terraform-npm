@@ -2,10 +2,10 @@
 const { join } = require('path');
 const unzip = require('./unzip');
 const purge = require('./purge');
-const setPerms = require('./setPerms');
-const safeMkdir = require('./safeMkdir');
+const setPerms = require('./set-perms');
+const safeMkdir = require('./safe-mkdir');
 const download = require('./download');
-const getPlatformZipUrl = require('./getPlatformZipUrl');
+const getPlatformUrl = require('./get-platform-url');
 
 /// File constants
 const TOOLS_DIR = 'tools';
@@ -29,12 +29,12 @@ try {
 // prettier-ignore
 async function mkZipDir() { return await safeMkdir(TOOLS_DIR); }
 async function getZipUrl() {
-	return getPlatformZipUrl(process.platform, process.arch);
+	return getPlatformUrl(process.platform, process.arch);
 }
 // prettier-ignore
 async function downloadZip(url) { return await download(url, ZIP_DIR); }
 // prettier-ignore
-async function unzipDownload() { return await unzip(ZIP_DIR, TOOLS_DIR); }
+async function unzipDownload() { return await unzip(ZIP_DIR, EXEC_DIR); }
 // prettier-ignore
 async function setBinPerms() { return await setPerms(EXEC_DIR, 0o755) }
 async function purgeZip() {

@@ -97,7 +97,7 @@ function matchPlatformToKey(platform, arch) {
  * @param {string} arch
  * @see TF_ZIP_URIS
  */
-async function matchPlatformToZipUri(platform, arch) {
+async function matchPlatformToUrl(platform, arch) {
 	const platformKey = await matchPlatformToKey(platform, arch);
 	const platformString = TF_ZIP_URIS[platformKey];
 	if (platformString === undefined) {
@@ -110,4 +110,4 @@ async function matchPlatformToZipUri(platform, arch) {
 	return TF_ROOT_URI + TF_ZIP_URIS[platformKey];
 }
 
-module.exports = matchPlatformToZipUri;
+module.exports = matchPlatformToUrl;
