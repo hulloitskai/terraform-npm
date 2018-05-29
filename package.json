@@ -20,11 +20,11 @@
     "executable"
   ],
   "scripts": {
-    "start": "cd src && node terraform-wrapper.js",
+    "start": "cd src && node terraform-wrapper",
     "prettier": "prettier --write src/**/*.js scripts/**/*.js tests/**/*.js",
     "prepub": "yarn prepublishOnly",
     "prepublishOnly": "yarn prettier && pkgfiles",
-    "postinstall": "node scripts/terraform-install.js",
+    "postinstall": "node scripts/install",
     "test": "./tests/runner.sh",
     "test-global": "./tests/global-runner.sh"
   },
