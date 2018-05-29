@@ -1,6 +1,6 @@
 {
   "name": "terraform-npm",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "An NPM executable package for HashiCorp's Terraform.",
   "homepage": "https://www.npmjs.com/package/terraform-npm",
   "repository": "https://github.com/steven-xie/terraform-npm",
@@ -24,7 +24,7 @@
     "prettier": "prettier --write src/**/*.js scripts/**/*.js tests/**/*.js",
     "prepub": "yarn prepublishOnly",
     "prepublishOnly": "yarn prettier && pkgfiles",
-    "postinstall": "node scripts/install",
+    "postinstall": "node src/install-terraform",
     "test": "./tests/runner.sh",
     "test-global": "./tests/global-runner.sh"
   },
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "progress": "^2.0.0",
-    "unzip": "^0.1.11"
+    "yauzl": "^2.9.1"
   },
   "devDependencies": {
     "pkgfiles": "^2.3.2",
