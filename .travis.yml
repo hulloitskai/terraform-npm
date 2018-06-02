@@ -39,7 +39,7 @@ jobs:
       node_js: "node"
     - <<: *local-test
       node_js: "stable"
-   - <<: *local-test
+    - <<: *local-test
       node_js: "lts/*"
 
     ## Global tests (with differing Node versions)
