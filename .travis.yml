@@ -24,7 +24,7 @@ definitions:
   global-test: &global-test
     stage: global-test
     install: yarn global add "https://github.com/$TRAVIS_REPO_SLUG#$TRAVIS_BRANCH"
-    script:
+    script: 
       - echo "Running global test against $(node -v)..."
       - yarn test-global
     # Attempt to skip Git cloning (doesn't work as of 02-06-18)
@@ -41,6 +41,9 @@ jobs:
       node_js: "stable"
     - <<: *local-test
       node_js: "9.*"  # version lts/* (8.11.2) doesn't seem to work
+    - <<: *local-test
+      node_js: "lts/*"
+      before_install: sleep 1  # workaround to prevent strange install failure
 
     ## Global tests (with differing Node versions)
     - <<: *global-test
@@ -49,3 +52,6 @@ jobs:
       node_js: "stable"
     - <<: *global-test 
       node_js: "9.*"  # version lts/* (8.11.2) doesn't seem to work
+    - <<: *global-test
+      node_js: "lts/*"
+      before_install: sleep 1  # workaround to prevent strange install failure
