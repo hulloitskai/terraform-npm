@@ -26,9 +26,8 @@ async function download(url, destDir) {
           prgbar.tick(chunk.length);
         })
         .on('end', function() {
-          fstream.end();
+          fstream.end(resolve);
           console.log('Download finished.');
-          fstream.close(resolve);
         })
         .on('error', function(err) {
           console.error(`Failed to download zipped Terraform executable: ${err}`);

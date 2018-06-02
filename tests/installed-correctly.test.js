@@ -15,4 +15,5 @@ execFile('yarn', ['start', '-v'], function(err, stdout) {
     );
     process.exit(2);
   }
+  console.log("Passed test: 'installed-correctly'");
 });

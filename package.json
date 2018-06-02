@@ -11,8 +11,17 @@
   "author": "Steven Xie <hello@stevenxie.me>",
   "license": "AAL",
   "private": false,
-  "os": ["!aix"],
-  "cpu": ["!mips", "!mipsel", "!ppc", "!ppc64", "!s390", "!s390x"],
+  "os": [
+    "!aix"
+  ],
+  "cpu": [
+    "!mips",
+    "!mipsel",
+    "!ppc",
+    "!ppc64",
+    "!s390",
+    "!s390x"
+  ],
   "keywords": [
     "terraform",
     "hashicorp",
