@@ -39,19 +39,13 @@ jobs:
       node_js: "node"
     - <<: *local-test
       node_js: "stable"
-    - <<: *local-test
-      node_js: "9.*"  # version lts/* (8.11.2) doesn't seem to work
-    - <<: *local-test
+   - <<: *local-test
       node_js: "lts/*"
-      before_install: sleep 1  # workaround to prevent strange install failure
 
     ## Global tests (with differing Node versions)
     - <<: *global-test
       node_js: "node"
     - <<: *global-test
       node_js: "stable"
-    - <<: *global-test 
-      node_js: "9.*"  # version lts/* (8.11.2) doesn't seem to work
     - <<: *global-test
       node_js: "lts/*"
-      before_install: sleep 1  # workaround to prevent strange install failure
