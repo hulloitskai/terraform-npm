@@ -2,7 +2,12 @@ language: node_js
 node_js:
   - "10.3.0"  # Last version this package was developed on
   - "node"
-  - "lts/*""
+  - "lts/*"
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
 
 script: echo "Running tests against $(node -v)..."
 
