@@ -11,6 +11,7 @@ cache:
   directories:
     - node_modules
 
+
 ## Custom job 'definitions'
 definitions:
   local-test: &local-test
@@ -26,21 +27,26 @@ definitions:
     script:
       - echo "Running global test against $(node -v)..."
       - yarn test-global
-    branches:
-      only: ""  # don't clone for this test!
-
+    # Attempt to skip Git cloning (doesn't work as of 02-06-18)
+    # branches
+    #   - only: "" 
 
 ## Build stages
 jobs:
   include:
-    ## Local tests
+    ## Local tests (with differing Node versions)
     - <<: *local-test
       node_js: "node"
     - <<: *local-test
       node_js: "stable"
+    - <<: *local-test
+      node_js: "lts/*"
+      install: npm i
 
-    ## Global tests
+    ## Global tests (with differing Node versions)
     - <<: *global-test
       node_js: "node"
     - <<: *global-test
       node_js: "stable"
+    - <<: *global-test
+      node_js: "lts/*"
