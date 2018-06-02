@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "10.3.0"  # Last version this package was developed on
+  - "node"
+  - "lts/*""
+
+script: echo "Running tests against $(node -v)..."
+
+jobs:
+  include:
+    - stage: Local Test
+    - install: yarn
+    - script:
+      - echo "Starting local test..."
+      - yarn test
+    - stage: Global Test
+    - install: yarn global add "https://github.com/$TRAVIS_REPO_SLUG/$TRAVIS_BRANCH"
+    - script:
+      - echo "Starting global test..."
+      - yarn test-global
