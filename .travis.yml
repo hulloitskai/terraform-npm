@@ -41,7 +41,6 @@ jobs:
       node_js: "stable"
     - <<: *local-test
       node_js: "lts/*"
-      install: npm i
 
     ## Global tests (with differing Node versions)
     - <<: *global-test

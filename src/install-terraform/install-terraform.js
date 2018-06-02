@@ -1,5 +1,5 @@
 // Imports
-const { join } = require('path');
+const { join, resolve } = require('path');
 const unzip = require('./unzip');
 const purge = require('./purge');
 const setPerms = require('./set-perms');
@@ -8,7 +8,7 @@ const download = require('./download');
 const getPlatformUrl = require('./get-platform-url');
 
 /// File constants
-const TOOLS_DIR = 'tools';
+const TOOLS_DIR = resolve(__dirname, '..', '..', 'tools');
 const ZIP_DIR = join(TOOLS_DIR, 'terraform.zip');
 const EXEC_NAME = process.platform === 'win32' ? 'terraform.exe' : 'terraform';
 const EXEC_DIR = join(TOOLS_DIR, EXEC_NAME);
@@ -23,6 +23,7 @@ try {
     .then(notifyCompletion);
 } catch (err) {
   console.error(`An unknown error occurred: ${err}`);
+  process.exit(-1);
 }
 
 /// Supporting functions...
