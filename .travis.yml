@@ -15,15 +15,18 @@ cache:
 ## Custom job 'definitions'
 definitions:
   local-test: &local-test
-    stage: local-test
+    stage: Local test
     install: yarn
     script:
       - echo "Running local test against $(node -v)..."
       - yarn test
 
   global-test: &global-test
-    stage: global-test
-    install: yarn global add "https://github.com/$TRAVIS_REPO_SLUG#$TRAVIS_BRANCH"
+    stage: Global test
+    install:
+      - BRANCH="$TRAVIS_PULL_REQUEST_BRANCH"
+      - if [ "$BRANCH" == "" ]; then BRANCH="$TRAVIS_BRANCH"; fi
+      - yarn global add "https://github.com/$TRAVIS_REPO_SLUG#$BRANCH"
     script: 
       - echo "Running global test against $(node -v)..."
       - yarn test-global
