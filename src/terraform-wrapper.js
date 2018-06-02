@@ -12,4 +12,5 @@ terraform.stdout.pipe(process.stdout);
 terraform.stderr.pipe(process.stderr);
 terraform.on('error', function(err) {
 	console.error(`Received an error while executing the Terraform binary: ${err}`);
+  process.exit(1);
 });
