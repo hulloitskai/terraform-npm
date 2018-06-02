@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 
 function showError(msg) {
-  console.error(`Test 'global' failed: ${msg}`);
+  console.error(`Test 'installed-correctly-global' failed: ${msg}`);
 }
 
 exec('terraform -v', function(err, stdout, stderr) {
@@ -15,4 +15,5 @@ exec('terraform -v', function(err, stdout, stderr) {
     );
     process.exit(2);
   }
+  console.log("Passed test: 'installed-correctly-global'");
 });
