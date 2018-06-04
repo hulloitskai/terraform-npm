@@ -20,14 +20,12 @@ async function download(url, destDir) {
     get(parseUrl(url), function(res) {
       const totalChunks = parseInt(res.headers['content-length'], 10);
       const prgbar = new Progress('[:bar] :percent ', { total: totalChunks });
-      res
-        .on('data', function(chunk) {
-          fstream.write(chunk);
-          prgbar.tick(chunk.length);
+      // prettier-ignore
+      res.on('data', function(chunk) {
+          fstream.write(chunk); prgbar.tick(chunk.length);
         })
         .on('end', function() {
-          fstream.end(resolve);
-          console.log('Download finished.');
+          fstream.end(resolve); console.log('Download finished.');
         })
         .on('error', function(err) {
           console.error(`Failed to download zipped Terraform executable: ${err}`);
