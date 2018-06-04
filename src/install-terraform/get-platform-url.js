@@ -1,3 +1,5 @@
+const assert = require('assert').strict;
+
 // Terraform download source contants
 const TF_ROOT_URI = 'https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_';
 const TF_ZIP_URIS = {
@@ -56,22 +58,15 @@ function matchArchToKeyPostfix(arch, isARMcompat = true) {
  * @see TF_ZIP_URIS
  */
 function matchPlatformToKey(platform, arch) {
-  function errorOut() {
-    notifyIncompatible(platform, arch);
-    process.exit(10);
-  }
+  // prettier-ignore
+  function errorOut() { notifyIncompatible(platform, arch); process.exit(10); }
 
   function matchArch(isARMcompat) {
     try {
       return matchArchToKeyPostfix(arch, isARMcompat);
     } catch (err) {
-      if (err.message === 'arch-not-supported') errorOut();
-      else {
-        console.error(
-          "An unknown error occurred during 'matchArchToKeyPostfix': " + err.message
-        );
-        process.exit(11);
-      }
+      assert.equal(err.message, 'arch-not-supported');
+      errorOut();
     }
   }
 
