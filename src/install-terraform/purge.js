@@ -10,7 +10,9 @@ async function purge(fileDir) {
 
     function callback(err) {
       if (err) {
-        console.error(`An error occurred while deleting the Terraform zip: ${err}`);
+        console.error(
+          `An error occurred while deleting the Terraform zip: ${err}`
+        );
         process.exit(8);
       }
       resolve();
